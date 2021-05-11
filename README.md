@@ -1,0 +1,1 @@
+# NaUKMA-Graphic
