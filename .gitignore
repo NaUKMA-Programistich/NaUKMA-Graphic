@@ -1,0 +1,16 @@
+/.idea/.gitignore
+/.idea/compiler.xml
+/out/production/JavaFxApplication/sample/Controller.class
+/.idea/description.html
+/.idea/encodings.xml
+/.idea/gradle.xml
+/.idea/libraries/JAVAFX_16.xml
+/.idea/artifacts/JavaFXApp.xml
+/JavaFxApplication.iml
+/out/production/JavaFxApplication/sample/Main.class
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/project-template.xml
+/out/production/JavaFxApplication/sample/sample.fxml
+/.idea/uiDesigner.xml
+/.idea/vcs.xml
