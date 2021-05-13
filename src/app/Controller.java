@@ -3,18 +3,18 @@ package app;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.LineChart;
+import javafx.scene.chart.ScatterChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import utils.ErrorMsg;
+import utils.Graphic;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
-
-    private boolean nowGraphics = false;
 
     @FXML
     private ResourceBundle resources;
@@ -47,9 +47,11 @@ public class Controller implements Initializable {
     private Button saveBtn;
 
     @FXML
-    private LineChart<?, ?> graphic;
+    private ScatterChart<?, ?> Graphics;
 
     private ErrorMsg error = new ErrorMsg(false, "");
+
+    private ArrayList<Graphic> pointsForGraphic = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -60,7 +62,7 @@ public class Controller implements Initializable {
     @FXML
     private boolean drawGraphics(ActionEvent event) {
         visibleErrorMsg("");
-        graphic.setVisible(false);
+        //Graphics.setVisible(false);
         if (validationEmptyStr()) {
             visibleErrorMsg("Some fields empty");
             return false;
@@ -70,11 +72,14 @@ public class Controller implements Initializable {
             visibleErrorMsg(error.errorMsg);
             return false;
         } else {
-            // build graph
+            createPoints();
             visibleErrorMsg("Graphics drawn");
-            graphic.setVisible(true);
+            //Graphics.setVisible(true);
         }
         return true;
+    }
+
+    private void createPoints() {
     }
 
     @FXML
@@ -82,14 +87,13 @@ public class Controller implements Initializable {
         visibleErrorMsg("");
         if (drawGraphics(event)) {
             visibleErrorMsg("Drawn\nSaving...");
-
         }
     }
 
     private void validationNumber(TextField txtField) {
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("-[0-9]*")) {
-                txtField.setText(newValue.replaceAll("[^\\d]", ""));
+            if (!newValue.matches("^[-]?[0-9]+.?[0-9]+$")) {
+                txtField.setText(newValue.replaceAll("[^\\d-.]", ""));
             }
         });
     }
@@ -109,19 +113,23 @@ public class Controller implements Initializable {
         boolean isError = false;
         String errorMsgStr = "";
 
-        double upX = Double.parseDouble(upTxt.getText());
-        double toX = Double.parseDouble(toTxt.getText());
-        double step = Double.parseDouble(stepTxt.getText());
-
-        if (step < 0) {
-            errorMsgStr += "Step less 0\n";
+        try{
+            double upX = Double.parseDouble(upTxt.getText());
+            double toX = Double.parseDouble(toTxt.getText());
+            double step = Double.parseDouble(stepTxt.getText());
+            if (step < 0) {
+                errorMsgStr = "Step less 0\n";
+                isError = true;
+            }
+            if (upX > toX) {
+                errorMsgStr += "Top x is less than the bottom";
+                isError = true;
+            }
+        } catch (NumberFormatException ex){
             isError = true;
+            errorMsgStr = "Error parse number";
         }
-        if (upX > toX) {
-            errorMsgStr += "Top x is less than the bottom";
-            isError = true;
-        }
-
+        
         error = new ErrorMsg(isError, errorMsgStr);
     }
 
