@@ -9,10 +9,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * Main Class
+ */
 public class Main extends Application {
-    public Main() {
-    }
 
+    /**
+     * Start application
+     * @param primaryStage stage
+     * @throws IOException exception
+     */
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("start_screen.fxml")));
         Scene scene = new Scene(root);
@@ -22,6 +28,10 @@ public class Main extends Application {
         primaryStage.show();
     }
 
+    /**
+     * Start program
+     * @param args arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
