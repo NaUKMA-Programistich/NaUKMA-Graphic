@@ -159,7 +159,8 @@ public class Controller implements Initializable {
     }
 
     /**
-     * Validate number
+     * validationNumber
+     * @param txtField TextField
      */
     private void validationNumber(TextField txtField) {
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -189,7 +190,8 @@ public class Controller implements Initializable {
     }
 
     /**
-     * Validate Data
+     * validationData
+     * @return bool validationData
      */
     private boolean validationData() {
         errorMsgStr = "";
