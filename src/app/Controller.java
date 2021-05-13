@@ -3,18 +3,20 @@ package app;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.ScatterChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
+import javafx.scene.chart.XYChart.Data;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import utils.ErrorMsg;
-import utils.Graphic;
 
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
+
 
     @FXML
     private ResourceBundle resources;
@@ -47,22 +49,21 @@ public class Controller implements Initializable {
     private Button saveBtn;
 
     @FXML
-    private ScatterChart<?, ?> Graphics;
+    private LineChart<Number, Number> Graphics;
 
     private ErrorMsg error = new ErrorMsg(false, "");
 
-    private ArrayList<Graphic> pointsForGraphic = new ArrayList<>();
+    private XYChart.Series<Number, Number> seriesPoint = new XYChart.Series<>();;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //graphic.setVisible(false);
         validateAllTextField();
     }
 
     @FXML
     private boolean drawGraphics(ActionEvent event) {
         visibleErrorMsg("");
-        //Graphics.setVisible(false);
         if (validationEmptyStr()) {
             visibleErrorMsg("Some fields empty");
             return false;
@@ -72,14 +73,30 @@ public class Controller implements Initializable {
             visibleErrorMsg(error.errorMsg);
             return false;
         } else {
+            seriesPoint.getData().removeAll(Collections.singleton(Graphics.getData().setAll()));
             createPoints();
             visibleErrorMsg("Graphics drawn");
-            //Graphics.setVisible(true);
         }
         return true;
     }
 
     private void createPoints() {
+        seriesPoint = new XYChart.Series<>();
+        seriesPoint.setName("Witch of Agnesi");
+        double nowX = Double.parseDouble(upTxt.getText());
+        double toX = Double.parseDouble(toTxt.getText());
+        double step = Double.parseDouble(stepTxt.getText());
+        double a = Double.parseDouble(aTxt.getText());
+        while (nowX <= toX){
+            seriesPoint.getData().add(new Data<>(nowX, countFunction(a, nowX)));
+            nowX += step;
+        }
+        Graphics.setAnimated(false);
+        Graphics.getData().add(seriesPoint);
+    }
+
+    private double countFunction(double a, double x){
+        return (8 * a * a * a)/(x * x + 4 * a * a);
     }
 
     @FXML
@@ -113,7 +130,7 @@ public class Controller implements Initializable {
         boolean isError = false;
         String errorMsgStr = "";
 
-        try{
+        try {
             double upX = Double.parseDouble(upTxt.getText());
             double toX = Double.parseDouble(toTxt.getText());
             double step = Double.parseDouble(stepTxt.getText());
@@ -125,11 +142,11 @@ public class Controller implements Initializable {
                 errorMsgStr += "Top x is less than the bottom";
                 isError = true;
             }
-        } catch (NumberFormatException ex){
+        } catch (NumberFormatException ex) {
             isError = true;
             errorMsgStr = "Error parse number";
         }
-        
+
         error = new ErrorMsg(isError, errorMsgStr);
     }
 
