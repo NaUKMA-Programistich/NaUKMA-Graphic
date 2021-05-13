@@ -106,7 +106,7 @@ public class Controller implements Initializable {
      * visible error msg
      */
     private void visibleErrorMsg() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, errorMsgStr, ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.ERROR, errorMsgStr, ButtonType.OK);
         alert.showAndWait();
     }
 
