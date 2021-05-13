@@ -1,6 +1,8 @@
 # NaUKMA-Graphic
 Its project for NaUKMA
 
+[JavaDoc](https://programistich.github.io/NaUKMA-Graphic/app/package-summary.html)
+
 Java program that builds a schedule "Curl Agnesi"
 
 Required functions:
