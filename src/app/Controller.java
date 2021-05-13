@@ -1,31 +1,27 @@
 package app;
 
+import javafx.embed.swing.SwingFXUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.chart.XYChart.Data;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.WritableImage;
 import javafx.scene.text.Text;
 import utils.ErrorMsg;
 
+import javax.imageio.ImageIO;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
 
-
-    @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private Text titleTxt;
 
     @FXML
     private TextField aTxt;
@@ -43,17 +39,11 @@ public class Controller implements Initializable {
     private Text errorTxt;
 
     @FXML
-    private Button drawBtn;
-
-    @FXML
-    private Button saveBtn;
-
-    @FXML
     private LineChart<Number, Number> Graphics;
 
     private ErrorMsg error = new ErrorMsg(false, "");
 
-    private XYChart.Series<Number, Number> seriesPoint = new XYChart.Series<>();;
+    private XYChart.Series<Number, Number> seriesPoint = new XYChart.Series<>();
 
 
     @Override
@@ -87,7 +77,7 @@ public class Controller implements Initializable {
         double toX = Double.parseDouble(toTxt.getText());
         double step = Double.parseDouble(stepTxt.getText());
         double a = Double.parseDouble(aTxt.getText());
-        while (nowX <= toX){
+        while (nowX <= toX) {
             seriesPoint.getData().add(new Data<>(nowX, countFunction(a, nowX)));
             nowX += step;
         }
@@ -95,15 +85,23 @@ public class Controller implements Initializable {
         Graphics.getData().add(seriesPoint);
     }
 
-    private double countFunction(double a, double x){
-        return (8 * a * a * a)/(x * x + 4 * a * a);
+    private double countFunction(double a, double x) {
+        return (8 * a * a * a) / (x * x + 4 * a * a);
     }
 
     @FXML
     private void saveGraphics(ActionEvent event) {
         visibleErrorMsg("");
         if (drawGraphics(event)) {
-            visibleErrorMsg("Drawn\nSaving...");
+            WritableImage image = Graphics.snapshot(new SnapshotParameters(), null);
+            String childName = "a=" + aTxt.getText() + "_upX=" + upTxt.getText() + "_toX=" + toTxt.getText() + "_step=" + upTxt.getText() + ".png";
+            File file = new File("img", childName);
+            try {
+                ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            visibleErrorMsg("Drawn\nSaved...");
         }
     }
 
