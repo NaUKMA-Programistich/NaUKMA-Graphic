@@ -13,7 +13,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.image.WritableImage;
 import javafx.scene.text.Text;
-import utils.ErrorMsg;
 
 import javax.imageio.ImageIO;
 import java.io.File;
@@ -64,8 +63,10 @@ public class Controller implements Initializable {
     @FXML
     private LineChart<Number, Number> Graphics;
 
+    /**
+     * Error message
+     */
     private String errorMsgStr = "";
-
 
     /**
      * Series point for graphics
@@ -102,8 +103,11 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Error alert
+     */
     private void visibleErrorMsg() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, errorMsgStr, ButtonType.OK);
+        Alert alert = new Alert(Alert.AlertType.ERROR, errorMsgStr, ButtonType.OK);
         alert.showAndWait();
     }
 
@@ -157,6 +161,11 @@ public class Controller implements Initializable {
         }
     }
 
+    /**
+     * Regex validationNumber
+     *
+     * @param txtField TextField
+     */
     private void validationNumber(TextField txtField) {
         txtField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("^[-]?[0-9]+.?[0-9]+$")) {
@@ -165,6 +174,9 @@ public class Controller implements Initializable {
         });
     }
 
+    /**
+     * validateAllTextField
+     */
     private void validateAllTextField() {
         validationNumber(aTxt);
         validationNumber(upTxt);
@@ -181,6 +193,11 @@ public class Controller implements Initializable {
         errorTxt.setText(msg);
     }
 
+    /**
+     * validationData
+     *
+     * @return boolvalidationData
+     */
     private boolean validationData() {
         errorMsgStr = "";
         boolean isError = false;
@@ -222,7 +239,6 @@ public class Controller implements Initializable {
 
         return isError;
     }
-
 
     /**
      * validationEmptyStr
