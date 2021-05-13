@@ -1,6 +1,8 @@
 package app;
 
 import java.io.IOException;
+import java.util.Objects;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,9 +14,10 @@ public class Main extends Application {
     }
 
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(this.getClass().getResource("start_screen.fxml"));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("start_screen.fxml")));
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         primaryStage.setTitle("Graphic by Programistich");
         primaryStage.show();
     }
