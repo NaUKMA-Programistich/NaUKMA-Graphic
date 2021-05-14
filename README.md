@@ -12,7 +12,7 @@ Required functions:
 VM options:
 `--module-path "{PATH_TO_JAVAFX}" --add-modules=javafx.fxml --add-modules=javafx.controls`
 
-[JavaDoc](https://programistich.github.io/NaUKMA-Graphic/app/package-summary.html)
+Documentation : [JavaDoc](https://programistich.github.io/NaUKMA-Graphic/app/package-summary.html)
 
 
 ### Instructions
