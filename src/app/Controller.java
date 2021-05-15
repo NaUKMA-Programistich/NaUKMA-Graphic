@@ -80,6 +80,7 @@ public class Controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Graphics.setVisible(false);
         validateAllTextField();
     }
 
@@ -92,9 +93,11 @@ public class Controller implements Initializable {
     @FXML
     private boolean drawGraphics(ActionEvent event) {
         if (validationData()) {
+            seriesPoint.getData().removeAll(Collections.singleton(Graphics.getData().setAll()));
             visibleErrorMsg();
             return false;
         } else {
+            Graphics.setVisible(true);
             seriesPoint.getData().removeAll(Collections.singleton(Graphics.getData().setAll()));
             createPoints();
             visibleMsg("Graphics drawn");
@@ -120,11 +123,13 @@ public class Controller implements Initializable {
         double toX = Double.parseDouble(toTxt.getText());
         double step = Double.parseDouble(stepTxt.getText());
         double a = Double.parseDouble(aTxt.getText());
-        while (nowX <= toX) {
+        do {
             seriesPoint.getData().add(new Data<>(nowX, countFunction(a, nowX)));
             nowX += step;
-        }
+        } while (nowX < toX);
         Graphics.setAnimated(false);
+        Graphics.setCreateSymbols(true);
+        Graphics.setAlternativeRowFillVisible(true);
         Graphics.getData().add(seriesPoint);
     }
 
@@ -203,6 +208,7 @@ public class Controller implements Initializable {
         }
 
         try {
+            double a = Double.parseDouble(aTxt.getText());
             double upX = Double.parseDouble(upTxt.getText());
             double toX = Double.parseDouble(toTxt.getText());
             double step = Double.parseDouble(stepTxt.getText());
