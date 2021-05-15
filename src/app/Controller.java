@@ -75,6 +75,7 @@ public class Controller implements Initializable {
 
     /**
      * initialize all fxml
+     *
      * @param url            URL
      * @param resourceBundle ResourceBundle
      */
@@ -91,11 +92,12 @@ public class Controller implements Initializable {
      */
     @FXML
     private boolean drawGraphics(ActionEvent event) {
+        visibleMsg("");
+        seriesPoint.getData().removeAll(Collections.singleton(Graphics.getData().setAll()));
         if (validationData()) {
             visibleErrorMsg();
             return false;
         } else {
-            seriesPoint.getData().removeAll(Collections.singleton(Graphics.getData().setAll()));
             createPoints();
             visibleMsg("Graphics drawn");
             return true;
@@ -122,6 +124,7 @@ public class Controller implements Initializable {
         double a = Double.parseDouble(aTxt.getText());
         while (nowX <= toX) {
             seriesPoint.getData().add(new Data<>(nowX, countFunction(a, nowX)));
+            if (step == 0) break;
             nowX += step;
         }
         Graphics.setAnimated(false);
@@ -130,6 +133,7 @@ public class Controller implements Initializable {
 
     /**
      * countFunction
+     *
      * @param a a
      * @param x x
      * @return y
@@ -140,6 +144,7 @@ public class Controller implements Initializable {
 
     /**
      * saveGraphics
+     *
      * @param event ActionEvent
      */
     @FXML
@@ -160,6 +165,7 @@ public class Controller implements Initializable {
 
     /**
      * validationNumber
+     *
      * @param txtField TextField
      */
     private void validationNumber(TextField txtField) {
@@ -191,6 +197,7 @@ public class Controller implements Initializable {
 
     /**
      * validationData
+     *
      * @return bool validationData
      */
     private boolean validationData() {
@@ -226,6 +233,10 @@ public class Controller implements Initializable {
                 isError = true;
             }
 
+            if ((step == 0 && !(upX == toX))) {
+                errorMsgStr += "Range not 0 and step = 0 \n";
+                isError = true;
+            }
 
         } catch (NumberFormatException ex) {
             isError = true;
