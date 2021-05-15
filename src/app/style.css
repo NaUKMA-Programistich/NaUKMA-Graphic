@@ -1,0 +1,8 @@
+.chart-horizontal-zero-line {
+    -fx-stroke: #000000;
+    -fx-border-width: 5px;
+}
+.chart-vertical-zero-line {
+    -fx-stroke: #000000;
+    -fx-border-width: 5px;
+}

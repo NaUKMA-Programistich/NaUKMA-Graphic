@@ -81,6 +81,7 @@ public class Controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        Graphics.setVisible(false);
         validateAllTextField();
     }
 
@@ -94,10 +95,12 @@ public class Controller implements Initializable {
     private boolean drawGraphics(ActionEvent event) {
         visibleMsg("");
         seriesPoint.getData().removeAll(Collections.singleton(Graphics.getData().setAll()));
+        Graphics.setVisible(false);
         if (validationData()) {
             visibleErrorMsg();
             return false;
         } else {
+            Graphics.setVisible(true);
             createPoints();
             visibleMsg("Graphics drawn");
             return true;
