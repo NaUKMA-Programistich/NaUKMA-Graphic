@@ -22,6 +22,7 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 
 
+
 /**
  * Controller data
  */
@@ -81,7 +82,7 @@ public class Controller implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        Graphics.setVisible(false);
+       // Graphics.setVisible(false);
         validateAllTextField();
     }
 
@@ -120,7 +121,7 @@ public class Controller implements Initializable {
      */
     private void createPoints() {
         seriesPoint = new XYChart.Series<>();
-        seriesPoint.setName("Witch of Agnesi");
+        seriesPoint.setName("a=" + aTxt.getText() + "_upX=" + upTxt.getText() + "_toX=" + toTxt.getText() + "_step=" + stepTxt.getText());
         double nowX = Double.parseDouble(upTxt.getText());
         double toX = Double.parseDouble(toTxt.getText());
         double step = Double.parseDouble(stepTxt.getText());
@@ -155,7 +156,7 @@ public class Controller implements Initializable {
         visibleMsg("");
         if (drawGraphics(event)) {
             WritableImage image = Graphics.snapshot(new SnapshotParameters(), null);
-            String childName = "a=" + aTxt.getText() + "_upX=" + upTxt.getText() + "_toX=" + toTxt.getText() + "_step=" + upTxt.getText() + ".png";
+            String childName = "Programistich; a=" + aTxt.getText() + "_upX=" + upTxt.getText() + "_toX=" + toTxt.getText() + "_step=" + stepTxt.getText() + ".png";
             File file = new File("img", childName);
             try {
                 ImageIO.write(SwingFXUtils.fromFXImage(image, null), "png", file);
